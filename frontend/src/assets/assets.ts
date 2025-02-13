@@ -44,7 +44,7 @@ interface Address {
 }
 
 // Define the type for a doctor object
-interface Doctor {
+export interface Doctor {
   _id: string;
   name: string;
   image: string;
