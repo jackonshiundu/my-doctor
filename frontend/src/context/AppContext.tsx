@@ -3,14 +3,18 @@ import { Doctor, doctors } from "../assets/assets";
 
 type AppContectType = {
   doctors: Doctor[];
+  currencySymbol: string;
 };
 const defaultContextValue: AppContectType = {
   doctors: [],
+  currencySymbol: "",
 };
 export const AppContext = createContext<AppContectType>(defaultContextValue);
 
 const AppContextProvider = (props: any) => {
+  const currencySymbol: string = "Ksh.";
   const value = {
+    currencySymbol,
     doctors,
   };
   return (
