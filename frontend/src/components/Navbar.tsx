@@ -73,6 +73,58 @@ const Navbar = () => {
             Create Account
           </button>
         )}
+        <img
+          onClick={() => setShowMenu(true)}
+          className="w-6 md:hidden"
+          src={assets.menu_icon}
+          alt="menu"
+        />
+        {/*  ---------------       mobile Menu       ----------------*/}
+        <div
+          className={`${
+            showMenu ? "fixed w-full" : "h-0 w-0"
+          } md:hidden right-0 bottom-0 top-0 left-0 z-20 overflow-hidden bg-white transition-all`}
+        >
+          <div className="flex items-center justify-between px-5 py-6">
+            <img className="w-36" src={assets.logo} alt="logo" />
+            <img
+              className="w-7"
+              onClick={() => setShowMenu(false)}
+              src={assets.cross_icon}
+              alt="close_icon"
+            />
+          </div>
+          <ul className="flex flex-col items-center gap-2 mt-5 text-lg font-medium">
+            <NavLink
+              onClick={() => setShowMenu(false)}
+              className="px-4 py-2 rounded inline-block hover:text-primary duration-500 transition-all"
+              to="/"
+            >
+              <p>Home</p>
+            </NavLink>
+            <NavLink
+              onClick={() => setShowMenu(false)}
+              className="px-4 py-2 rounded inline-block hover:text-primary duration-500 transition-all"
+              to="/doctors"
+            >
+              <p>All Doctors</p>
+            </NavLink>
+            <NavLink
+              onClick={() => setShowMenu(false)}
+              className="px-4 py-2 rounded inline-block hover:text-primary duration-500 transition-all"
+              to="/about"
+            >
+              <p>About</p>
+            </NavLink>
+            <NavLink
+              onClick={() => setShowMenu(false)}
+              className="px-4 py-2 rounded inline-block hover:text-primary duration-500 transition-all"
+              to="/contact"
+            >
+              <p>Contact Us</p>
+            </NavLink>
+          </ul>
+        </div>
       </div>
     </div>
   );
