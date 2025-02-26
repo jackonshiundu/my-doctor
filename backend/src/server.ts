@@ -16,9 +16,7 @@ app.use(express.json());
 
 app.get("/", async (req: express.Request, res: express.Response) => {
   try {
-    res.send(
-      "Welcome to unit testing guide for nodejs, typescript and express!"
-    );
+    res.send("Server is Running!");
   } catch (err) {
     console.log(err);
   }
