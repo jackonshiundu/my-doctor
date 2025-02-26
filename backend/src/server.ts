@@ -1,6 +1,10 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import connectDb from "./config/mongodb";
+import dotenv from "dotenv";
+import createCloudinary from "./config/cloudinary";
+dotenv.config();
 const app = express();
 
 // USE HELMET AND CORS MIDDLEWARES
@@ -14,6 +18,8 @@ app.use(helmet());
 
 app.use(express.json());
 
+connectDb();
+createCloudinary();
 app.get("/", async (req: express.Request, res: express.Response) => {
   try {
     res.send("Server is Running!");
