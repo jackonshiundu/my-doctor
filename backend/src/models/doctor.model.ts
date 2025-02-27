@@ -9,6 +9,7 @@ export interface TheDoctor extends Document {
   speciality: string;
   degree: string;
   experiance: string;
+  about: string;
   available: boolean;
   fee: number;
   Address: {
@@ -32,6 +33,7 @@ const doctorSchema: Schema<TheDoctor> = new Schema(
     speciality: { type: String, required: true },
     degree: { type: String, required: true },
     experiance: { type: String, required: true },
+    about: { type: String, required: true },
     available: { type: Boolean, required: true },
     fee: { type: Number, required: true },
     Address: { type: Object, required: true },

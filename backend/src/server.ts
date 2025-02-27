@@ -4,6 +4,7 @@ import helmet from "helmet";
 import connectDb from "./config/mongodb";
 import dotenv from "dotenv";
 import createCloudinary from "./config/cloudinary";
+import adminRouter from "./routes/admin.route";
 dotenv.config();
 const app = express();
 
@@ -23,13 +24,17 @@ createCloudinary();
 app.get("/", async (req: express.Request, res: express.Response) => {
   try {
     res.send("Server is Running!");
+    console.log("Hello world");
   } catch (err) {
     console.log(err);
   }
 });
+//api endpoints
+
+app.use("/api/v1/admin/", adminRouter);
 
 // Start backend server
-const PORT = process.env.PORT || 8800;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Backend server is running at port ${PORT}`);
 });
