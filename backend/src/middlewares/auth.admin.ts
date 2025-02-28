@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 const authAdmin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { atoken } = req.headers;
-    if (!!atoken || Array.isArray(atoken)) {
+    if (!atoken || Array.isArray(atoken)) {
       res.status(400).json({
         success: false,
         message: "Not authorised",
