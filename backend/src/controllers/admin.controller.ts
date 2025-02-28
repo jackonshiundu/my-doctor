@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 const upload = multer({ dest: "uploads/" });
 import doctorModel from "../models/doctor.model";
+import jwt from "jsonwebtoken";
 const addDoctor = async (
   req: Request,
   res: Response<any, Record<string, any>>
@@ -90,4 +91,24 @@ const addDoctor = async (
   }
 };
 
-export { addDoctor };
+//api for ad,in login
+const loginAdmin = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    if (
+      email === process.env.ADMIN_EMAIL &&
+      password === process.env.ADMIN_PASSWORD
+    ) {
+      const token = jwt.sign(email + password, process.env.JWT_SECRET);
+
+      res.status(200).json({ success: true, token });
+    } else {
+      res.status(400).json({ success: false, message: "Invalid Credentails" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export { addDoctor, loginAdmin };
