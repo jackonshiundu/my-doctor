@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import AdminContextProvider from "./context/AdminContext.tsx";
 import DoctorContextProvider from "./context/DoctorContext.tsx";
 import AppContextProvider from "./context/AdminContext.tsx";
+import { Toaster } from "react-hot-toast";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -13,6 +14,7 @@ createRoot(document.getElementById("root")!).render(
       <DoctorContextProvider>
         <AppContextProvider>
           <App />
+          <Toaster />
         </AppContextProvider>
       </DoctorContextProvider>
     </AdminContextProvider>

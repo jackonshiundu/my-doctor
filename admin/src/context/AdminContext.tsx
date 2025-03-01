@@ -12,7 +12,7 @@ const initialAdminContet = {
 };
 export const AdminContext = createContext<AdminContextType>(initialAdminContet);
 
-const AdminContextProvider = ({ props }: any) => {
+const AdminContextProvider = (props: any) => {
   const [aToken, setAToken] = useState("");
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const value = {

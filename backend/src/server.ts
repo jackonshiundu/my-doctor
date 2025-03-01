@@ -11,7 +11,7 @@ const app = express();
 // USE HELMET AND CORS MIDDLEWARES
 app.use(
   cors({
-    origin: ["*"], // Comma separated list of your urls to access your api. * means allow everything
+    origin: ["http://localhost:5174"], // Comma separated list of your urls to access your api. * means allow everything
     credentials: true, // Allow cookies to be sent with requests
   })
 );
@@ -31,7 +31,7 @@ app.get("/", async (req: express.Request, res: express.Response) => {
 });
 //api endpoints
 
-app.use("/api/v1/admin/", adminRouter);
+app.use("/api/v1/admin", adminRouter);
 
 // Start backend server
 const PORT = process.env.PORT || 8000;
