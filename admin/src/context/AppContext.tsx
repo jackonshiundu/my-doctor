@@ -1,9 +1,16 @@
 import { createContext } from "react";
 
-export const AppContext = createContext();
+type AppcontextType = {
+  aToken: string;
+};
 
-const AppContextProvider = (props) => {
-  const value = {};
+const AppcontextDefaultValue = {
+  aToken: "",
+};
+export const AppContext = createContext<AppcontextType>(AppcontextDefaultValue);
+
+const AppContextProvider = (props: any) => {
+  const value = { aToken };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
   );

@@ -1,11 +1,17 @@
-import React from "react";
+import { useContext } from "react";
 import Login from "./pages/Login";
+import { AdminContext } from "./context/AdminContext";
 
 const App = () => {
-  return (
+  const { aToken } = useContext(AdminContext);
+  console.log(aToken);
+
+  return !aToken ? (
     <div className="">
       <Login />
     </div>
+  ) : (
+    <>hello</>
   );
 };
 
