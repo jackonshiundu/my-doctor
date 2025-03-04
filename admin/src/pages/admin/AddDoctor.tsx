@@ -7,6 +7,7 @@ import axios from "axios";
 const AddDoctor = () => {
   const { backendUrl, aToken } = useContext(AdminContext);
   //states
+  const [loading, setLoading] = useState(false);
   const [docImg, setDocImg] = useState();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,6 +28,7 @@ const AddDoctor = () => {
   const onSubmitHander = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      setLoading(true);
       if (!docImg) {
         return toast.error("Doc Imagenot selected");
       }
@@ -75,6 +77,8 @@ const AddDoctor = () => {
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("An error occurred while submitting the form.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -225,8 +229,11 @@ const AddDoctor = () => {
             required
           />
         </div>
-        <button className="bg-primary px-10 py-3 mt-4 rounded-md text-white">
-          Add Doctor
+        <button
+          disabled={loading}
+          className="bg-primary px-10 py-3 mt-4 rounded-md text-white"
+        >
+          {loading ? "Adding..." : " Add Doctor"}
         </button>
       </div>
     </form>
