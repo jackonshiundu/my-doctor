@@ -27,3 +27,22 @@ export const assets = {
   appointments_icon,
   earning_icon,
 };
+
+interface Address {
+  line1: string;
+  line2: string;
+}
+
+// Define the type for a doctor object
+export interface Doctor {
+  _id: string;
+  name: string;
+  image: string;
+  speciality: string;
+  degree: string;
+  experience: string;
+  about: string;
+  available: boolean;
+  fee: number;
+  Address: Address;
+}
