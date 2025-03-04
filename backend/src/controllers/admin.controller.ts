@@ -74,9 +74,9 @@ const addDoctor = async (
       degree,
       experiance,
       about,
-      available,
       fee,
       phone,
+      available: true,
       Address: JSON.parse(Address),
       date: Date.now(),
     };
