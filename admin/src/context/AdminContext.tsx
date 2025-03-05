@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 type AdminContextType = {
   aToken: String | null;
   setAToken: (token: string | null) => void;
+  changeAvailability: (docId: string) => void;
   getAllDoctors: () => void;
   backendUrl: String;
   doctors: Doctor[];
@@ -14,6 +15,7 @@ const initialAdminContet = {
   aToken: "",
   setAToken: () => {},
   getAllDoctors: () => {},
+  changeAvailability: () => {},
   backendUrl: "",
   doctors: [],
 };
@@ -50,11 +52,29 @@ const AdminContextProvider = (props: any) => {
       }
     }
   };
+  const changeAvailability = async (docId: string) => {
+    try {
+      const { data } = await axios.patch(
+        `${backendUrl}/api/v1/admin/change-availability`,
+        { docId },
+        { headers: { aToken } }
+      );
+      if (data.success) {
+        toast.success(data.message);
+        getAllDoctors();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const value = {
     aToken,
     setAToken,
     backendUrl,
     doctors,
+    changeAvailability,
     getAllDoctors,
   };
   return (
