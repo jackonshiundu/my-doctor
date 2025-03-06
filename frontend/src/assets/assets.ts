@@ -37,7 +37,6 @@ import Gynecologist from "./Gynecologist.svg";
 import Neurologist from "./Neurologist.svg";
 import Pediatricians from "./Pediatricians.svg";
 
-// Define the type for the address object
 interface Address {
   line1: string;
   line2: string;
@@ -52,8 +51,9 @@ export interface Doctor {
   degree: string;
   experience: string;
   about: string;
-  fees: number;
-  address: Address;
+  available: boolean;
+  fee: number;
+  Address: Address;
 }
 
 // Define the type for the speciality data object
