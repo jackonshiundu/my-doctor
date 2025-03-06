@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import createCloudinary from "./config/cloudinary";
 import adminRouter from "./routes/admin.route";
 import doctorRoute from "./routes/doctor.routes";
+import userRoutes from "./routes/user.routes";
 dotenv.config();
 const app = express();
 
@@ -34,6 +35,7 @@ app.get("/", async (req: express.Request, res: express.Response) => {
 
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/doctor", doctorRoute);
+app.use("/api/v1/user", userRoutes);
 
 // Start backend server
 const PORT = process.env.PORT || 8000;

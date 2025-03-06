@@ -1,4 +1,4 @@
-import { defaultImage } from "config/data";
+import { defaultImage } from "../config/data";
 import mongoose, { Schema } from "mongoose";
 
 export interface TheUser extends Document {
