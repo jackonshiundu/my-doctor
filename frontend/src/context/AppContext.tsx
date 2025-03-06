@@ -21,9 +21,7 @@ const AppContextProvider = (props: any) => {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const getAllDoctorsData = async () => {
     try {
-      const { data } = await axios.get(
-        `${backendUrl}/api/v1/admin/all-doctors`
-      );
+      const { data } = await axios.get(`${backendUrl}/api/v1/doctor/list`);
       if (data.success) {
         setDoctors(data.doctors);
       } else {
@@ -31,6 +29,7 @@ const AppContextProvider = (props: any) => {
       }
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
   };
   const value = {

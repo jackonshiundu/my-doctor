@@ -5,6 +5,7 @@ import connectDb from "./config/mongodb";
 import dotenv from "dotenv";
 import createCloudinary from "./config/cloudinary";
 import adminRouter from "./routes/admin.route";
+import doctorRoute from "./routes/doctor.routes";
 dotenv.config();
 const app = express();
 
@@ -32,6 +33,7 @@ app.get("/", async (req: express.Request, res: express.Response) => {
 //api endpoints
 
 app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/doctor", doctorRoute);
 
 // Start backend server
 const PORT = process.env.PORT || 8000;
