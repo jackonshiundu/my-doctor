@@ -45,4 +45,28 @@ const register = async (req: Request, res: Response) => {
   }
 };
 
-export { register };
+//API for user Login
+const loginUser = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    const user = await userModel.findOne({ email: email });
+
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: "User Does not Exists.",
+      });
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (isMatch) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      res.status(200).json({ success: true, token });
+    } else {
+      res.json({ success: false, message: "Wrong password." });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+export { register, loginUser };
