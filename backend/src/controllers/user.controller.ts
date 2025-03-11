@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import userModel from "../models/user.model";
 import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
+import doctorModel from "../models/doctor.model";
 const register = async (req: Request, res: Response) => {
   try {
     const { email, name, password } = req.body;
@@ -137,6 +138,38 @@ const updateProfile = async (req: Request, res: Response) => {
     }
 
     res.status(200).json({ success: true, message: "Profile Updated" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+//API to book Appointment
+
+const bookAppointment = async (req: Request, res: Response) => {
+  try {
+    const { userId, docId, slotDate, slotTime, userData, amount, date } =
+      req.body;
+    const docData = await doctorModel.findById(docId).select("-password");
+    if (!docData.available) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Doctor not available" });
+    }
+    let slots_booked = docData.slots_booked;
+    //checking for slots availablity
+    if (slots_booked[slotDate]) {
+      if (slots_booked[slotDate].includes(slotTime)) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Slot not available" });
+      } else {
+        slots_booked[slotDate].push(slotTime);
+      }
+    } else {
+      slots_booked[slotDate] = [];
+      slots_booked[slotDate].push(slotTime);
+    }
+    const userData = await userModel.findById(userId).select("-password");
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: error.message });
