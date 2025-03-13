@@ -17,12 +17,7 @@ export interface TheDoctor extends Document {
     line2: string;
   };
   date: number;
-  slots_booked: {
-    slot_id: string;
-    patient_id: string;
-    date: string;
-    time: string;
-  }[];
+  slots_booked: any;
 }
 const doctorSchema: Schema<TheDoctor> = new Schema(
   {
@@ -38,14 +33,10 @@ const doctorSchema: Schema<TheDoctor> = new Schema(
     fee: { type: Number, required: true },
     Address: { type: Object, required: true },
     date: { type: Number, required: true },
-    slots_booked: [
-      {
-        slot_id: { type: String, required: true },
-        patient_id: { type: String, required: true },
-        date: { type: String, required: true },
-        time: { type: String, required: true },
-      },
-    ],
+    slots_booked: {
+      type: Object,
+      default: {},
+    },
   },
   { minimize: false }
 );
