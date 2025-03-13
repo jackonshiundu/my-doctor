@@ -151,17 +151,15 @@ const bookAppointment = async (req: Request, res: Response) => {
     const { userId, docId, slotDate, slotTime, amount, date } = req.body;
     const docData = await doctorModel.findById(docId).select("-password");
     if (!docData.available) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Doctor not available" });
+      res.status(400).json({ success: false, message: "Doctor not available" });
+      return;
     }
     let slots_booked = docData.slots_booked;
     //checking for slots availablity
     if (slots_booked[slotDate]) {
       if (slots_booked[slotDate].includes(slotTime)) {
-        return res
-          .status(400)
-          .json({ success: false, message: "Slot not available" });
+        res.status(400).json({ success: false, message: "Slot not available" });
+        return;
       } else {
         slots_booked[slotDate].push(slotTime);
       }
@@ -192,4 +190,4 @@ const bookAppointment = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-export { register, loginUser, getProfile, updateProfile };
+export { register, loginUser, getProfile, updateProfile, bookAppointment };
