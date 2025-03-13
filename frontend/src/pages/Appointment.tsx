@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { assets, Doctor } from "../assets/assets";
 import RelatedDoctors from "../components/RelatedDoctors";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 type TimeSlot = {
   dateTime: Date;
@@ -10,8 +12,9 @@ type TimeSlot = {
 };
 const Appointment = () => {
   const { docId } = useParams<{ docId: string }>();
-
-  const { doctors, currencySymbol } = useContext(AppContext);
+  const navigate = useNavigate();
+  const { doctors, currencySymbol, backendUrl, token, getAllDoctorsData } =
+    useContext(AppContext);
   const [docInfo, setDocInfo] = useState<Doctor | null>(null);
   const [docSlots, setDocSlots] = useState<TimeSlot[][]>([]);
   const [slotIndex, setSlotIndex] = useState(0);
@@ -74,6 +77,42 @@ const Appointment = () => {
         currentDate.setMinutes(currentDate.getMinutes() + 30);
       }
       setDocSlots((prev) => [...prev, timeSlots]);
+    }
+  };
+  //function to book appointment.
+  const bookAppointment = async () => {
+    if (!token) {
+      toast("You have to Login to book An appointment.", {
+        icon: "🙂",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      return navigate("/login");
+    }
+    try {
+      const date = docSlots[slotIndex][0].dateTime;
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      const slotDate = day + "_" + month + "_" + year;
+      console.log(slotDate);
+      const { data } = await axios.post(
+        `${backendUrl}/api/v1/user/book-appointment`,
+        { docId, slotDate, slotTime },
+        { headers: { token } }
+      );
+      if (data.success) {
+        toast("Appointment booked ", { icon: "👏🏻👏🏻" });
+        navigate("/my-appointment");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
     }
   };
   useEffect(() => {
@@ -168,7 +207,10 @@ const Appointment = () => {
                 </p>
               ))}
           </div>
-          <button className="bg-primary text-white text-sm font-light px-14 py-3 rounded-full mt-6">
+          <button
+            onClick={bookAppointment}
+            className="bg-primary text-white text-sm font-light px-14 py-3 rounded-full mt-6"
+          >
             Book an appointment
           </button>
         </div>
