@@ -124,7 +124,7 @@ const Appointment = () => {
       );
       if (data.success) {
         toast("Appointment booked ", { icon: "👏🏻👏🏻" });
-        navigate("/my-appointment");
+        navigate("/my-appointments");
       } else {
         toast.error(data.message);
       }

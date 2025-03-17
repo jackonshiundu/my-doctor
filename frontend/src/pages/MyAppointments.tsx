@@ -7,6 +7,26 @@ import toast from "react-hot-toast";
 const MyAppointments = () => {
   const { backendUrl, token } = useContext(AppContext);
   const [appointments, setAppointments] = useState<TheAppointment[]>([]);
+  const months = [
+    "",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const slotDateFormat = (slotDate: string): string => {
+    const dateArray = slotDate.split("_");
+    return (
+      dateArray[0] + " " + months[Number(dateArray[1])] + " " + dateArray[2]
+    );
+  };
   const getUserAppointments = async () => {
     try {
       const { data } = await axios.get(
@@ -43,22 +63,25 @@ const MyAppointments = () => {
               <div>
                 <img
                   className="w-32 bg-indigo-50"
-                  src={appointment.image}
+                  src={appointment?.docData?.image}
                   alt="appointment"
                 />
               </div>
               <div className="flex-1 text-sm text-zinc-500">
                 <p className="text-neutral-800 font-semibold ">
-                  {appointment.name}
+                  {appointment?.docData?.name}
                 </p>
-                <p>{appointment.speciality}</p>
+                <p>{appointment?.docData?.speciality}</p>
                 <p className="text-zinc-700 font-medium mt-1">Address:</p>
-                <p className="text-xs">{appointment.address.line1}</p>
-                <p className="text-xs">{appointment.address.line2}</p>
+                <p className="text-xs">{appointment?.docData?.Address.line1}</p>
+                <p className="text-xs">
+                  {appointment?.docData?.Address?.line2}
+                </p>
                 <p className="text-xs mt-1">
                   Date and Time:{" "}
                   <span className="text-sm text-neutral-700 font-medium">
-                    25, july,2025 | 8:30 PM
+                    {slotDateFormat(appointment.slotDate)} |{" "}
+                    {appointment.slotTime}
                   </span>
                 </p>
               </div>
