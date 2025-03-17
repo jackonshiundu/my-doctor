@@ -17,7 +17,7 @@ const Appointment = () => {
   const navigate = useNavigate();
   const { doctors, currencySymbol, backendUrl, token, getAllDoctorsData } =
     useContext(AppContext);
-  const [docInfo, setDocInfo] = useState<Doctor | null>(null);
+  const [docInfo, setDocInfo] = useState<Doctor>();
   const [docSlots, setDocSlots] = useState<TimeSlot[][]>([]);
   const [slotIndex, setSlotIndex] = useState(0);
   const [slotTime, setSlotTime] = useState("");
@@ -38,6 +38,7 @@ const Appointment = () => {
       setDocInfo(null);
     }
   };
+  console.log(docInfo);
   const getAvailableSLots = async () => {
     setDocSlots([]);
 
@@ -69,11 +70,25 @@ const Appointment = () => {
           hour: "2-digit",
           minute: "2-digit",
         });
+
+        //
+        let day = currentDate.getDate();
+        let month = currentDate.getMonth() + 1;
+        let year = currentDate.getFullYear();
+        const slotDate = day + "_" + month + "_" + year;
+        const slotTime = formattedTime;
+        const isSlotAvailable =
+          docInfo.slots_booked[slotDate] &&
+          docInfo.slots_booked[slotDate].includes(slotTime)
+            ? false
+            : true;
         //adding a slot to an array
-        timeSlots.push({
-          dateTime: new Date(currentDate),
-          time: formattedTime,
-        });
+        if (isSlotAvailable) {
+          timeSlots.push({
+            dateTime: new Date(currentDate),
+            time: formattedTime,
+          });
+        }
 
         //increment currenttime by 30minutes
         currentDate.setMinutes(currentDate.getMinutes() + 30);
