@@ -194,7 +194,7 @@ const bookAppointment = async (req: Request, res: Response) => {
 const listAppointment = async (req: Request, res: Response) => {
   try {
     const { userId } = req.body;
-    const appointments = await appointmentModel.findOneAndReplace({ userId });
+    const appointments = await appointmentModel.find({ userId });
     res.json({ success: true, appointments });
   } catch (error) {
     console.log(error);

@@ -61,7 +61,21 @@ interface SpecialityData {
   speciality: string;
   image: string;
 }
-
+//appointment
+export interface TheAppointment {
+  _id: string;
+  userId: string;
+  docId: string;
+  slotDate: string;
+  slotTime: string;
+  userData: object;
+  docData: object;
+  amount: number;
+  date: number;
+  canceled: boolean;
+  payment: boolean;
+  isCompleted: boolean;
+}
 export const assets = {
   appointment_img,
   header_img,
