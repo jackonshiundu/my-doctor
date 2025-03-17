@@ -190,4 +190,22 @@ const bookAppointment = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-export { register, loginUser, getProfile, updateProfile, bookAppointment };
+//API to get user appointments for the frontend
+const listAppointment = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.body;
+    const appointments = await appointmentModel.findOneAndReplace({ userId });
+    res.json({ success: true, appointments });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+export {
+  register,
+  loginUser,
+  getProfile,
+  updateProfile,
+  bookAppointment,
+  listAppointment,
+};

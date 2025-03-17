@@ -2,6 +2,7 @@ import authUser from "../middlewares/auth.user";
 import {
   bookAppointment,
   getProfile,
+  listAppointment,
   loginUser,
   register,
   updateProfile,
@@ -21,5 +22,6 @@ userRoutes.patch(
   updateProfile
 );
 userRoutes.post("/book-appointment", authUser, bookAppointment);
+userRoutes.get("/list-appointment", authUser, listAppointment);
 
 export default userRoutes;
