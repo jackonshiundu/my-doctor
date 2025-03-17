@@ -152,14 +152,14 @@ const bookAppointment = async (req: Request, res: Response) => {
     const docData = await doctorModel.findById(docId).select("-password");
     console.log(docData);
     if (docData && !docData.available) {
-      res.status(400).json({ success: false, message: "Doctor not available" });
+      res.json({ success: false, message: "Doctor not available" });
       return;
     }
     let slots_booked = docData.slots_booked;
     //checking for slots availablity
     if (slots_booked[slotDate]) {
       if (slots_booked[slotDate].includes(slotTime)) {
-        res.status(400).json({ success: false, message: "Slot not available" });
+        res.json({ success: false, message: "Slot not available" });
         return;
       } else {
         slots_booked[slotDate].push(slotTime);

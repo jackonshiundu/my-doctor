@@ -41,16 +41,7 @@ const doctorSchema: Schema<TheDoctor> = new Schema(
   },
   { minimize: false }
 );
-// Middleware to delete associated appointments before a doctor is removed
-doctorSchema.pre(
-  "deleteOne",
-  { document: true, query: false },
-  async function (next) {
-    const doctorId = this._id;
-    await appointmentModel.deleteMany({ docId: doctorId });
-    next();
-  }
-);
+
 const doctorModel = mongoose.model("doctor", doctorSchema);
 
 export default doctorModel;
