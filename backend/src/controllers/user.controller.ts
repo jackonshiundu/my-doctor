@@ -150,7 +150,8 @@ const bookAppointment = async (req: Request, res: Response) => {
   try {
     const { userId, docId, slotDate, slotTime, amount, date } = req.body;
     const docData = await doctorModel.findById(docId).select("-password");
-    if (!docData.available) {
+    console.log(docData);
+    if (docData && !docData.available) {
       res.status(400).json({ success: false, message: "Doctor not available" });
       return;
     }
@@ -182,7 +183,7 @@ const bookAppointment = async (req: Request, res: Response) => {
     const newAppointment = new appointmentModel(appointmentData);
     await newAppointment.save();
     //save new slots data in doctor's data
-    doctorModel.findByIdAndUpdate(docId, { slots_booked });
+    await doctorModel.findByIdAndUpdate(docId, { slots_booked });
 
     res.status(200).json({ success: true, message: "Appointment booked" });
   } catch (error) {

@@ -12,6 +12,8 @@ type TimeSlot = {
 };
 const Appointment = () => {
   const { docId } = useParams<{ docId: string }>();
+  console.log(docId);
+
   const navigate = useNavigate();
   const { doctors, currencySymbol, backendUrl, token, getAllDoctorsData } =
     useContext(AppContext);
@@ -79,6 +81,7 @@ const Appointment = () => {
       setDocSlots((prev) => [...prev, timeSlots]);
     }
   };
+
   //function to book appointment.
   const bookAppointment = async () => {
     if (!token) {

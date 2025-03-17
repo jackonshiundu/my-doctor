@@ -53,12 +53,9 @@ const AppContextProvider = (props: any) => {
   //function to get userData
   const loadUserData = async () => {
     try {
-      const { data } = await axios.get(
-        `${backendUrl}/api/v1/user/profile/book-appointment`,
-        {
-          headers: { token },
-        }
-      );
+      const { data } = await axios.get(`${backendUrl}/api/v1/user/profile`, {
+        headers: { token },
+      });
       if (data.success) {
         setUserData(data.userData);
       } else {
