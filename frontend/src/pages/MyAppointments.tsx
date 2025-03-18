@@ -5,7 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const MyAppointments = () => {
-  const { backendUrl, token } = useContext(AppContext);
+  const { backendUrl, token, getAllDoctorsData } = useContext(AppContext);
   const [appointments, setAppointments] = useState<TheAppointment[]>([]);
   const months = [
     "",
@@ -56,6 +56,7 @@ const MyAppointments = () => {
       if (data.success) {
         toast.success(data.message);
         getUserAppointments();
+        getAllDoctorsData();
       } else {
         toast.error(data.message);
       }

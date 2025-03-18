@@ -124,6 +124,7 @@ const Appointment = () => {
       );
       if (data.success) {
         toast("Appointment booked ", { icon: "👏🏻👏🏻" });
+        getAllDoctorsData();
         navigate("/my-appointments");
       } else {
         toast.error(data.message);
