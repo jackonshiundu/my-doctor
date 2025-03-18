@@ -123,6 +123,11 @@ const MyAppointments = () => {
                     Cancel Appointment
                   </button>
                 )}
+                {appointment.canceled && (
+                  <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-500">
+                    Appointment canceled
+                  </button>
+                )}
               </div>
             </div>
           ))}
