@@ -43,6 +43,27 @@ const MyAppointments = () => {
       toast.error(error.message);
     }
   };
+  //cancelling appointment logic
+
+  const cancelAppointment = async (appointmentId: string) => {
+    try {
+      console.log(appointmentId);
+      const { data } = await axios.post(
+        `${backendUrl}/api/v1/user/cancel-appointment`,
+        { appointmentId },
+        { headers: { token } }
+      );
+      if (data.success) {
+        toast.success(data.message);
+        getUserAppointments();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
   useEffect(() => {
     if (token) {
       getUserAppointments();
@@ -87,12 +108,21 @@ const MyAppointments = () => {
               </div>
               <div></div>
               <div className="flex flex-col gap-2 justify-end">
-                <button className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-500">
-                  Pay online
-                </button>
-                <button className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-500">
-                  Cancel Appointment
-                </button>
+                {!appointment.canceled && (
+                  <button className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-500">
+                    Pay online
+                  </button>
+                )}
+                {!appointment.canceled && (
+                  <button
+                    onClick={() => {
+                      cancelAppointment(appointment._id);
+                    }}
+                    className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-red-500 hover:text-white transition-all duration-500"
+                  >
+                    Cancel Appointment
+                  </button>
+                )}
               </div>
             </div>
           ))}
