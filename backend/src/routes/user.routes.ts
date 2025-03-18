@@ -24,6 +24,6 @@ userRoutes.patch(
 );
 userRoutes.post("/book-appointment", authUser, bookAppointment);
 userRoutes.get("/list-appointment", authUser, listAppointment);
-userRoutes.get("/cancel-appointment", authUser, cancelAppointment);
+userRoutes.post("/cancel-appointment", authUser, cancelAppointment);
 
 export default userRoutes;
