@@ -6,6 +6,7 @@ import { v2 as cloudinary } from "cloudinary";
 const upload = multer({ dest: "uploads/" });
 import doctorModel from "../models/doctor.model";
 import jwt from "jsonwebtoken";
+import appointmentModel from "../models/appointment.model";
 const addDoctor = async (
   req: Request,
   res: Response<any, Record<string, any>>
@@ -121,4 +122,14 @@ const getAllDoctors = async (req: Request, res: Response) => {
     res.json({ success: false, message: error.message });
   }
 };
-export { addDoctor, loginAdmin, getAllDoctors };
+//API to get Apoitnment list
+const appointmentsAdmin = async (req: Request, res: Response) => {
+  try {
+    const appointments = await appointmentModel.find({});
+    res.json({ success: true, appointments });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+export { addDoctor, loginAdmin, getAllDoctors, appointmentsAdmin };
