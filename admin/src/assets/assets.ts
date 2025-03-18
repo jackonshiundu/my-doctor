@@ -46,3 +46,18 @@ export interface Doctor {
   fee: number;
   Address: Address;
 }
+
+export interface TheAppointment {
+  _id: string;
+  userId: string;
+  docId: string;
+  slotDate: string;
+  slotTime: string;
+  userData: object;
+  docData: object;
+  amount: number;
+  date: number;
+  canceled: boolean;
+  payment: boolean;
+  isCompleted: boolean;
+}

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useState } from "react";
-import { Doctor } from "../assets/assets";
+import { Doctor, TheAppointment } from "../assets/assets";
 import toast from "react-hot-toast";
 
 type AdminContextType = {
@@ -10,6 +10,9 @@ type AdminContextType = {
   getAllDoctors: () => void;
   backendUrl: String;
   doctors: Doctor[];
+  appointments: TheAppointment[];
+  setAppointments: React.Dispatch<React.SetStateAction<any[]>>;
+  getAllApointments: () => void;
 };
 const initialAdminContet = {
   aToken: "",
@@ -18,6 +21,9 @@ const initialAdminContet = {
   changeAvailability: () => {},
   backendUrl: "",
   doctors: [],
+  appointments: [],
+  setAppointments: () => {},
+  getAllApointments: () => {},
 };
 export const AdminContext = createContext<AdminContextType>(initialAdminContet);
 
@@ -29,7 +35,7 @@ const AdminContextProvider = (props: any) => {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   //settin the back end URL
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
+  const [appointments, setAppointments] = useState<TheAppointment[]>([]);
   //function to gegt all doctors
   const getAllDoctors = async () => {
     try {
@@ -69,6 +75,22 @@ const AdminContextProvider = (props: any) => {
       console.log(error);
     }
   };
+  //
+  const getAllApointments = async () => {
+    try {
+      const { data } = await axios.get(
+        `${backendUrl}/api/v1/admin/admin-appointments`,
+        { headers: { aToken } }
+      );
+      if (data.success) {
+        setAppointments(data.appointments);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const value = {
     aToken,
     setAToken,
@@ -76,6 +98,9 @@ const AdminContextProvider = (props: any) => {
     doctors,
     changeAvailability,
     getAllDoctors,
+    appointments,
+    setAppointments,
+    getAllApointments,
   };
   return (
     <AdminContext.Provider value={value}>
