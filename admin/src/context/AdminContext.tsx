@@ -14,6 +14,8 @@ type AdminContextType = {
   setAppointments: React.Dispatch<React.SetStateAction<any[]>>;
   getAllApointments: () => void;
   cancelAppointment: (appointmentID: string) => void;
+  dashData: {};
+  getDashData: () => void;
 };
 const initialAdminContet = {
   aToken: "",
@@ -26,6 +28,8 @@ const initialAdminContet = {
   setAppointments: () => {},
   getAllApointments: () => {},
   cancelAppointment: () => {},
+  dashData: {},
+  getDashData: () => {},
 };
 export const AdminContext = createContext<AdminContextType>(initialAdminContet);
 
@@ -35,6 +39,8 @@ const AdminContextProvider = (props: any) => {
   );
   //creatign the doctors state
   const [doctors, setDoctors] = useState<Doctor[]>([]);
+  //dashboard Data
+  const [dashData, setDashData] = useState(false);
   //settin the back end URL
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [appointments, setAppointments] = useState<TheAppointment[]>([]);
@@ -111,6 +117,26 @@ const AdminContextProvider = (props: any) => {
       console.log(error);
     }
   };
+  //Get Dashboard Data
+  const getDashData = async () => {
+    try {
+      const { data } = await axios.get(
+        `${backendUrl}/api/v1/admin/admin-dashboard`,
+        {
+          headers: {
+            aToken,
+          },
+        }
+      );
+      if (data.success) {
+        setDashData(data.dashData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const value = {
     aToken,
     setAToken,
@@ -122,6 +148,8 @@ const AdminContextProvider = (props: any) => {
     setAppointments,
     getAllApointments,
     cancelAppointment,
+    dashData,
+    getDashData,
   };
   return (
     <AdminContext.Provider value={value}>
