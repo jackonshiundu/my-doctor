@@ -61,3 +61,33 @@ export interface TheAppointment {
   payment: boolean;
   isCompleted: boolean;
 }
+
+//function to calculate the age
+export const calculateAge = (dob: string) => {
+  const today = new Date();
+  const birthDate = new Date(dob);
+
+  let Age = today.getFullYear() - birthDate.getFullYear();
+
+  return Age;
+};
+
+//function to get the date format
+const months = [
+  "",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+export const slotDateFormat = (slotDate: string): string => {
+  const dateArray = slotDate.split("_");
+  return dateArray[0] + " " + months[Number(dateArray[1])] + " " + dateArray[2];
+};

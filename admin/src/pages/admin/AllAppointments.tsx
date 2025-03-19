@@ -1,10 +1,17 @@
 import React, { useContext, useEffect } from "react";
 import { AdminContext } from "../../context/AdminContext";
-import { TheAppointment } from "../../assets/assets";
+import {
+  calculateAge,
+  slotDateFormat,
+  TheAppointment,
+} from "../../assets/assets";
+import { AppContext } from "../../context/AppContext";
 
 const AllAppointments = () => {
   const { aToken, appointments, setAppointments, getAllApointments } =
     useContext(AdminContext);
+  const { currencySymbol } = useContext(AppContext);
+
   useEffect(() => {
     if (aToken) {
       getAllApointments();
@@ -28,16 +35,34 @@ const AllAppointments = () => {
         {appointments.map((appointment: TheAppointment, index: number) => (
           <div
             key={index}
-            className="flex flex-wrap justify-between max-sm:gap-2 sm:grid grid-cols-[0.5fr_3fr_1fr_3fr_1fr_1fr] items-center text-gray-500 py-3 px-6 border-b hover:bg-gray-500"
+            className="flex flex-wrap justify-between max-sm:gap-2 sm:grid grid-cols-[0.5fr_3fr_1fr_3fr_1fr_1fr] items-center text-gray-500 py-3 px-6 border-b hover:bg-gray-200"
           >
-            <p>{index + 1}</p>
-            <div>
+            <p className="max-sm:hidden ">{index + 1}</p>
+            <div className="flex items-center gap-2">
               <img
+                className="w-8 rounded-full"
                 src={appointment?.userData?.image}
                 alt={appointment?.userData?.name}
               />
               <p>{appointment?.userData?.name}</p>
             </div>
+            <p className="max-sm:hidden">
+              {calculateAge(appointment?.userData?.dob)}
+            </p>
+            <p>
+              {slotDateFormat(appointment.slotDate)},{appointment.slotTime}
+            </p>
+            <div className="flex items-center gap-2">
+              <img
+                className="w-8 rounded-full bg-gray-200"
+                src={appointment?.docData?.image}
+                alt={appointment?.docData?.name}
+              />
+              <p>{appointment?.docData?.name}</p>
+            </div>
+            <p>
+              {currencySymbol}.{appointment.amount}
+            </p>
           </div>
         ))}
       </div>
