@@ -13,6 +13,7 @@ type AdminContextType = {
   appointments: TheAppointment[];
   setAppointments: React.Dispatch<React.SetStateAction<any[]>>;
   getAllApointments: () => void;
+  cancelAppointment: (appointmentID: string) => void;
 };
 const initialAdminContet = {
   aToken: "",
@@ -24,6 +25,7 @@ const initialAdminContet = {
   appointments: [],
   setAppointments: () => {},
   getAllApointments: () => {},
+  cancelAppointment: () => {},
 };
 export const AdminContext = createContext<AdminContextType>(initialAdminContet);
 
@@ -91,6 +93,24 @@ const AdminContextProvider = (props: any) => {
       console.log(error);
     }
   };
+  //cancel Appointment
+  const cancelAppointment = async (appointmentID: string) => {
+    try {
+      const { data } = await axios.post(
+        `${backendUrl}/api/v1/admin/cancel-appointment`,
+        { appointmentID },
+        { headers: { aToken } }
+      );
+      if (data.success) {
+        toast.success(data.message);
+        getAllApointments();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const value = {
     aToken,
     setAToken,
@@ -101,6 +121,7 @@ const AdminContextProvider = (props: any) => {
     appointments,
     setAppointments,
     getAllApointments,
+    cancelAppointment,
   };
   return (
     <AdminContext.Provider value={value}>
