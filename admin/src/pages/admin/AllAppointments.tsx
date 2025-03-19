@@ -9,8 +9,13 @@ import {
 import { AppContext } from "../../context/AppContext";
 
 const AllAppointments = () => {
-  const { aToken, appointments, setAppointments, getAllApointments } =
-    useContext(AdminContext);
+  const {
+    aToken,
+    appointments,
+    setAppointments,
+    getAllApointments,
+    cancelAppointment,
+  } = useContext(AdminContext);
   const { currencySymbol } = useContext(AppContext);
 
   useEffect(() => {
@@ -68,6 +73,7 @@ const AllAppointments = () => {
               <p className="text-red-200 text-xm font-medium">Cancelled</p>
             ) : (
               <img
+                onClick={() => cancelAppointment(appointment._id)}
                 src={assets.cancel_icon}
                 alt="cancel icon"
                 className="w-10 cursor-pointer"

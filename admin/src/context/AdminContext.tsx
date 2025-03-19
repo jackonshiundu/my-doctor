@@ -94,11 +94,11 @@ const AdminContextProvider = (props: any) => {
     }
   };
   //cancel Appointment
-  const cancelAppointment = async (appointmentID: string) => {
+  const cancelAppointment = async (appointmentId: string) => {
     try {
       const { data } = await axios.post(
-        `${backendUrl}/api/v1/admin/cancel-appointment`,
-        { appointmentID },
+        `${backendUrl}/api/v1/admin/cancel-appointments`,
+        { appointmentId },
         { headers: { aToken } }
       );
       if (data.success) {

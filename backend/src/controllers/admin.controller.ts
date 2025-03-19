@@ -7,6 +7,7 @@ const upload = multer({ dest: "uploads/" });
 import doctorModel from "../models/doctor.model";
 import jwt from "jsonwebtoken";
 import appointmentModel from "../models/appointment.model";
+import userModel from "../models/user.model";
 const addDoctor = async (
   req: Request,
   res: Response<any, Record<string, any>>
@@ -161,10 +162,29 @@ const appointmentCancel = async (req: Request, res: Response) => {
   }
 };
 
+//API to get Dahboard Data for admin panel
+
+const adminDashboard = async (req: Request, res: Response) => {
+  try {
+    const doctors = await doctorModel.find({});
+    const users = await userModel.find({});
+    const appointments = await appointmentModel.find({});
+    const dashData = {
+      doctors: doctors.length,
+      users: users.length,
+      appointments: appointments.length,
+      latestAppointments: appointments.reverse().slice(0, 5),
+    };
+    res.json({ success: true, dashData });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 export {
   addDoctor,
   loginAdmin,
   getAllDoctors,
   appointmentsAdmin,
   appointmentCancel,
+  adminDashboard,
 };
