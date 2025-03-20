@@ -14,7 +14,7 @@ export const DoctorContext = createContext<DoctorContext>(initialDoctorContext);
 
 const DoctorContextProvider = (props: any) => {
   const [dToken, setDToken] = useState(
-    localStorage.getItem("dToken") ? localStorage.getItem("dToken") : ""
+    localStorage.getItem("dToken") ? localStorage.getItem("dToken") : null
   );
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const value = { backendUrl, dToken, setDToken };

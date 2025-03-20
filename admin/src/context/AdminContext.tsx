@@ -35,7 +35,7 @@ export const AdminContext = createContext<AdminContextType>(initialAdminContet);
 
 const AdminContextProvider = (props: any) => {
   const [aToken, setAToken] = useState(
-    localStorage.getItem("aToken") ? localStorage.getItem("aToken") : ""
+    localStorage.getItem("aToken") ? localStorage.getItem("aToken") : null
   );
   //creatign the doctors state
   const [doctors, setDoctors] = useState<Doctor[]>([]);
