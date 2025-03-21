@@ -9,6 +9,9 @@ import AllAppointments from "./pages/admin/Allappointments";
 import AddDoctor from "./pages/admin/Adddoctor";
 import DoctorsList from "./pages/admin/DoctorsList";
 import { DoctorContext } from "./context/DoctorContext";
+import DoctorDashboard from "./pages/doctor/DoctorDashboard";
+import DoctorAppintment from "./pages/doctor/DoctorAppintment";
+import DoctorProfile from "./pages/doctor/DoctorProfile";
 
 const App = () => {
   const { aToken } = useContext(AdminContext);
@@ -27,13 +30,14 @@ const App = () => {
     );
   }
 
-  // Render the appropriate layout based on the user's role
   return (
     <div className="bg-gray-100">
       <Navbar />
       <div className="flex items-start">
         <Sidebar />
         <Routes>
+          {/*           Admin Routes
+           */}
           {isAdmin && (
             <>
               <Route path="/admin-dashboard" element={<Dashboard />} />
@@ -44,8 +48,14 @@ const App = () => {
           )}
           {isDoctor && (
             <>
-              {/* Add doctor-specific routes here */}
-              <Route path="/doctor-dashboard" element={<Dashboard />} />
+              {/* Doctor's Routes */}
+              <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
+              <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
+              <Route
+                path="/doctor-appointments"
+                element={<DoctorAppintment />}
+              />
+              <Route path="/doctor-profile" element={<DoctorProfile />} />
             </>
           )}
           <Route path="/" element={<></>} />
