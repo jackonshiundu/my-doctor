@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import doctorModel from "../models/doctor.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import appointmentModel from "../models/appointment.model";
 const changeAvailablity = async (req: Request, res: Response) => {
   try {
     const { docId } = req.body;
@@ -57,4 +58,16 @@ const doctorLogin = async (req: Request, res: Response) => {
     res.json({ success: false, message: error.message });
   }
 };
-export { changeAvailablity, doctorList, doctorLogin };
+//API to  get doctor appointments for doctor panel
+const appointmentDoctor = async (req: Request, res: Response) => {
+  try {
+    const { doctorId } = req.body;
+    const appointments = await appointmentModel.find({ doctorId });
+
+    res.json({ success: true, appointments });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+export { changeAvailablity, doctorList, doctorLogin, appointmentDoctor };
