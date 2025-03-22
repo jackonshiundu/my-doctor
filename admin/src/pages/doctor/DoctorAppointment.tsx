@@ -3,7 +3,13 @@ import { DoctorContext } from "../../context/DoctorContext";
 import { assets, calculateAge, slotDateFormat } from "../../assets/assets";
 
 const DoctorAppointment = () => {
-  const { dToken, getAppointments, appointments } = useContext(DoctorContext);
+  const {
+    dToken,
+    getAppointments,
+    appointments,
+    completeAppointment,
+    cancelAppointment,
+  } = useContext(DoctorContext);
   useEffect(() => {
     if (dToken) {
       getAppointments();
@@ -53,18 +59,26 @@ const DoctorAppointment = () => {
               {appointment?.slotTime}
             </p>
             <p>Ksh.{appointment.amount}</p>
-            <div className="flex">
-              <img
-                className="w-10 cursor-pointer"
-                src={assets.cancel_icon}
-                alt="cancel-icon"
-              />
-              <img
-                className="w-10 cursor-pointer"
-                src={assets.tick_icon}
-                alt="tick_icon"
-              />
-            </div>
+            {appointment.canceled ? (
+              <p className="text-red-400 text-sm font-medium">Canceled</p>
+            ) : appointment.isCompleted ? (
+              <p className="text-primary text-sm font-medium">Completed</p>
+            ) : (
+              <div className="flex">
+                <img
+                  onClick={() => cancelAppointment(appointment._id)}
+                  className="w-10 cursor-pointer"
+                  src={assets.cancel_icon}
+                  alt="cancel-icon"
+                />
+                <img
+                  onClick={() => completeAppointment(appointment._id)}
+                  className="w-10 cursor-pointer"
+                  src={assets.tick_icon}
+                  alt="tick_icon"
+                />
+              </div>
+            )}
           </div>
         ))}
       </div>

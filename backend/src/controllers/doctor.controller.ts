@@ -94,6 +94,7 @@ const appointmentComplete = async (req: Request, res: Response) => {
 const appointmentCancel = async (req: Request, res: Response) => {
   try {
     const { doctorId, appointmentId } = req.body;
+
     const appointmentData = await appointmentModel.findById(appointmentId);
     if (appointmentData && appointmentData.docId == doctorId) {
       await appointmentModel.findByIdAndUpdate(appointmentId, {

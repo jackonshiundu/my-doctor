@@ -55,7 +55,7 @@ const DoctorContextProvider = (props: any) => {
     try {
       const { data } = await axios.post(
         `${backendUrl}/api/v1/doctor/appointment-complete`,
-        { appointmentId },
+        { appointmentId, dToken },
         { headers: { dToken } }
       );
       if (data.success) {
@@ -74,7 +74,7 @@ const DoctorContextProvider = (props: any) => {
     try {
       const { data } = await axios.post(
         `${backendUrl}/api/v1/doctor/appointment-cancel`,
-        { appointmentId },
+        { appointmentId, dToken },
         { headers: { dToken } }
       );
       if (data.success) {
