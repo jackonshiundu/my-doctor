@@ -4,9 +4,9 @@ import {
   doctorLogin,
   appointmentDoctor,
   appointmentComplete,
+  appointmentCancel,
 } from "../controllers/doctor.controller";
 import express from "express";
-import { appointmentCancel } from "controllers/admin.controller";
 
 const doctorRoute = express.Router();
 

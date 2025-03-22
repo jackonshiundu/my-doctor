@@ -10,6 +10,8 @@ interface DoctorContext {
   appointments: TheAppointment[];
   setAppointments: (appointments: TheAppointment[]) => void;
   getAppointments: () => void;
+  completeAppointment: (appointmentId: string) => void;
+  cancelAppointment: (appointmentId: string) => void;
 }
 const initialDoctorContext = {
   backendUrl: "",
@@ -18,6 +20,8 @@ const initialDoctorContext = {
   appointments: [],
   setAppointments: () => {},
   getAppointments: () => {},
+  completeAppointment: () => {},
+  cancelAppointment: () => {},
 };
 export const DoctorContext = createContext<DoctorContext>(initialDoctorContext);
 
@@ -46,6 +50,44 @@ const DoctorContextProvider = (props: any) => {
       toast.error(error.message);
     }
   };
+  //marking appointment completes
+  const completeAppointment = async (appointmentId: string) => {
+    try {
+      const { data } = await axios.post(
+        `${backendUrl}/api/v1/doctor/appointment-complete`,
+        { appointmentId },
+        { headers: { dToken } }
+      );
+      if (data.success) {
+        toast.success(data.message);
+        getAppointments();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+  //cancelling appointment
+  const cancelAppointment = async (appointmentId: string) => {
+    try {
+      const { data } = await axios.post(
+        `${backendUrl}/api/v1/doctor/appointment-cancel`,
+        { appointmentId },
+        { headers: { dToken } }
+      );
+      if (data.success) {
+        toast.success(data.message);
+        getAppointments();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
   const value = {
     backendUrl,
     dToken,
@@ -53,6 +95,8 @@ const DoctorContextProvider = (props: any) => {
     appointments,
     setAppointments,
     getAppointments,
+    completeAppointment,
+    cancelAppointment,
   };
   return (
     <DoctorContext.Provider value={value}>
