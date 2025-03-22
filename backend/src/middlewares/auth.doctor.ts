@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 const authDoctor = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { dToken } = req.headers;
+    const { dToken } = req.body;
     if (!dToken || Array.isArray(dToken)) {
       res.status(400).json({
         success: false,

@@ -30,9 +30,11 @@ const DoctorContextProvider = (props: any) => {
   //getting appointments data
   const getAppointments = async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await axios.post(
         `${backendUrl}/api/v1/doctor/doctor-appointment`,
-        { headers: { dToken } }
+        { dToken }
+        /*         { headers: { dToken } }
+         */
       );
       if (data.success) {
         setAppointments(data.appointments.reverse());

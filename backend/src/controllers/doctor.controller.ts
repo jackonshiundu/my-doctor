@@ -62,7 +62,7 @@ const doctorLogin = async (req: Request, res: Response) => {
 const appointmentDoctor = async (req: Request, res: Response) => {
   try {
     const { doctorId } = req.body;
-    const appointments = await appointmentModel.find({ doctorId });
+    const appointments = await appointmentModel.find({ docId: doctorId });
 
     res.json({ success: true, appointments });
   } catch (error) {

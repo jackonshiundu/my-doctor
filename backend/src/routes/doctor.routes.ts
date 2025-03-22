@@ -10,6 +10,6 @@ const doctorRoute = express.Router();
 
 doctorRoute.get("/list", doctorList);
 doctorRoute.post("/login-doctor", doctorLogin);
-doctorRoute.get("/doctor-appointment", authDoctor, appointmentDoctor);
+doctorRoute.post("/doctor-appointment", authDoctor, appointmentDoctor);
 
 export default doctorRoute;
