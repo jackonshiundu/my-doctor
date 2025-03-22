@@ -111,7 +111,35 @@ const appointmentCancel = async (req: Request, res: Response) => {
     res.json({ success: false, message: error.message });
   }
 };
-
+//Api to get dahboard Data for Doctor Panel
+const doctorDahsboard = async (req: Request, res: Response) => {
+  try {
+    const { docId } = req.body;
+    const appointments = await appointmentModel.find({ docId });
+    let earnings = 0;
+    appointments.map((appointment) => {
+      if (appointment.isCompleted || appointment.payment) {
+        earnings += appointment.amount;
+      }
+    });
+    let patients: string[] = [];
+    appointments.map((appointment) => {
+      if (patients.includes(appointment.userId)) {
+        patients.push(appointment.userId);
+      }
+    });
+    const dashBoardData = {
+      earnings,
+      appointments: appointments.length,
+      patients: patients.length,
+      latestAppointments: appointments.reverse().slice(0, 5),
+    };
+    res.json({ success: true, dashBoardData });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
 export {
   changeAvailablity,
   doctorList,
@@ -119,4 +147,5 @@ export {
   appointmentDoctor,
   appointmentCancel,
   appointmentComplete,
+  doctorDahsboard,
 };
