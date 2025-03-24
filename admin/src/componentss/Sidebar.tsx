@@ -88,7 +88,7 @@ const Sidebar = () => {
                 isActive ? "bg-green-50 border-r-4 border-primary" : ""
               }`
             }
-            to="/doctor-list"
+            to="/doctor-profile"
           >
             <img src={assets.people_icon} alt="home-icon" />
             <p className="hidden md:block">Profile </p>

@@ -15,6 +15,9 @@ interface DoctorContext {
   dashData: any;
   setDashData: (docData: any) => void;
   getDashData: () => void;
+  profileData: any;
+  setProfileData: (profileData: any) => void;
+  getDoctorProfile: () => void;
 }
 const initialDoctorContext = {
   backendUrl: "",
@@ -28,6 +31,9 @@ const initialDoctorContext = {
   dashData: false,
   setDashData: () => {},
   getDashData: () => {},
+  profileData: false,
+  setProfileData: () => {},
+  getDoctorProfile: () => {},
 };
 export const DoctorContext = createContext<DoctorContext>(initialDoctorContext);
 
@@ -38,6 +44,7 @@ const DoctorContextProvider = (props: any) => {
   const [appointments, setAppointments] = useState<TheAppointment[]>([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [dashData, setDashData] = useState(false);
+  const [profileData, setProfileData] = useState(false);
   //getting appointments data
   const getAppointments = async () => {
     try {
@@ -114,6 +121,44 @@ const DoctorContextProvider = (props: any) => {
       toast.error(error.message);
     }
   };
+  //getting the the doctor profile data
+  const getDoctorProfile = async () => {
+    try {
+      const { data } = await axios.post(
+        `${backendUrl}/api/v1/doctor/doctor-profile`,
+        {
+          dToken,
+        }
+      );
+      if (data.success) {
+        setProfileData(data.profileData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+  //getting the the doctor profile data
+  const updatingDoctorProfile = async () => {
+    try {
+      const { data } = await axios.post(
+        `${backendUrl}/api/v1/doctor/doctor-dashboard`,
+        {
+          dToken,
+        }
+      );
+      if (data.success) {
+        setDashData(data.dashBoardData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
   const value = {
     backendUrl,
     dToken,
@@ -126,6 +171,9 @@ const DoctorContextProvider = (props: any) => {
     dashData,
     setDashData,
     getDashData,
+    profileData,
+    setProfileData,
+    getDoctorProfile,
   };
   return (
     <DoctorContext.Provider value={value}>

@@ -20,6 +20,6 @@ doctorRoute.post("/appointment-complete", authDoctor, appointmentComplete);
 doctorRoute.post("/appointment-cancel", authDoctor, appointmentCancel);
 doctorRoute.post("/doctor-dashboard", authDoctor, doctorDashboard);
 doctorRoute.post("/doctor-profile", authDoctor, doctorProfile);
-doctorRoute.post("/update-doctor-profile", authDoctor, updateDoctorProfile);
+doctorRoute.patch("/update-doctor-profile", authDoctor, updateDoctorProfile);
 
 export default doctorRoute;
