@@ -6,6 +6,8 @@ import {
   appointmentComplete,
   appointmentCancel,
   doctorDashboard,
+  doctorProfile,
+  updateDoctorProfile,
 } from "../controllers/doctor.controller";
 import express from "express";
 
@@ -17,5 +19,7 @@ doctorRoute.post("/doctor-appointment", authDoctor, appointmentDoctor);
 doctorRoute.post("/appointment-complete", authDoctor, appointmentComplete);
 doctorRoute.post("/appointment-cancel", authDoctor, appointmentCancel);
 doctorRoute.post("/doctor-dashboard", authDoctor, doctorDashboard);
+doctorRoute.post("/doctor-profile", authDoctor, doctorProfile);
+doctorRoute.post("/update-doctor-profile", authDoctor, updateDoctorProfile);
 
 export default doctorRoute;
