@@ -5,7 +5,7 @@ import {
   appointmentDoctor,
   appointmentComplete,
   appointmentCancel,
-  doctorDahsboard,
+  doctorDashboard,
 } from "../controllers/doctor.controller";
 import express from "express";
 
@@ -16,6 +16,6 @@ doctorRoute.post("/login-doctor", doctorLogin);
 doctorRoute.post("/doctor-appointment", authDoctor, appointmentDoctor);
 doctorRoute.post("/appointment-complete", authDoctor, appointmentComplete);
 doctorRoute.post("/appointment-cancel", authDoctor, appointmentCancel);
-doctorRoute.post("/doctor-dashboard", authDoctor, doctorDahsboard);
+doctorRoute.post("/doctor-dashboard", authDoctor, doctorDashboard);
 
 export default doctorRoute;

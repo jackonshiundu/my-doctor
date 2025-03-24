@@ -112,10 +112,10 @@ const appointmentCancel = async (req: Request, res: Response) => {
   }
 };
 //Api to get dahboard Data for Doctor Panel
-const doctorDahsboard = async (req: Request, res: Response) => {
+const doctorDashboard = async (req: Request, res: Response) => {
   try {
-    const { docId } = req.body;
-    const appointments = await appointmentModel.find({ docId });
+    const { doctorId } = req.body;
+    const appointments = await appointmentModel.find({ docId: doctorId });
     let earnings = 0;
     appointments.map((appointment) => {
       if (appointment.isCompleted || appointment.payment) {
@@ -124,7 +124,7 @@ const doctorDahsboard = async (req: Request, res: Response) => {
     });
     let patients: string[] = [];
     appointments.map((appointment) => {
-      if (patients.includes(appointment.userId)) {
+      if (!patients.includes(appointment.userId)) {
         patients.push(appointment.userId);
       }
     });
@@ -147,5 +147,5 @@ export {
   appointmentDoctor,
   appointmentCancel,
   appointmentComplete,
-  doctorDahsboard,
+  doctorDashboard,
 };

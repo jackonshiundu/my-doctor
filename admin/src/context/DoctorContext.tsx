@@ -12,6 +12,9 @@ interface DoctorContext {
   getAppointments: () => void;
   completeAppointment: (appointmentId: string) => void;
   cancelAppointment: (appointmentId: string) => void;
+  dashData: any;
+  setDashData: (docData: any) => void;
+  getDashData: () => void;
 }
 const initialDoctorContext = {
   backendUrl: "",
@@ -22,6 +25,9 @@ const initialDoctorContext = {
   getAppointments: () => {},
   completeAppointment: () => {},
   cancelAppointment: () => {},
+  dashData: false,
+  setDashData: () => {},
+  getDashData: () => {},
 };
 export const DoctorContext = createContext<DoctorContext>(initialDoctorContext);
 
@@ -31,6 +37,7 @@ const DoctorContextProvider = (props: any) => {
   );
   const [appointments, setAppointments] = useState<TheAppointment[]>([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const [dashData, setDashData] = useState(false);
   //getting appointments data
   const getAppointments = async () => {
     try {
@@ -88,6 +95,25 @@ const DoctorContextProvider = (props: any) => {
       toast.error(error.message);
     }
   };
+  //getting the DashData
+  const getDashData = async () => {
+    try {
+      const { data } = await axios.post(
+        `${backendUrl}/api/v1/doctor/doctor-dashboard`,
+        {
+          dToken,
+        }
+      );
+      if (data.success) {
+        setDashData(data.dashBoardData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
   const value = {
     backendUrl,
     dToken,
@@ -97,6 +123,9 @@ const DoctorContextProvider = (props: any) => {
     getAppointments,
     completeAppointment,
     cancelAppointment,
+    dashData,
+    setDashData,
+    getDashData,
   };
   return (
     <DoctorContext.Provider value={value}>
