@@ -1,15 +1,40 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DoctorContext } from "../../context/DoctorContext";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const DoctorProfile = () => {
-  const { dToken, profileData, getDoctorProfile } = useContext(DoctorContext);
+  const { dToken, profileData, getDoctorProfile, setProfileData, backendUrl } =
+    useContext(DoctorContext);
   const [isEdit, setIsEdit] = useState(false);
+  const updateProfile = async () => {
+    try {
+      const updateData = {
+        available: profileData.available,
+        Address: profileData.Address,
+        fee: profileData.fee,
+      };
+      const { data } = await axios.patch(
+        `${backendUrl}/api/v1/doctor/update-doctor-profile`,
+        { ...updateData, dToken }
+      );
+      if (data.success) {
+        toast.success(data.message);
+        setIsEdit(false);
+        getDoctorProfile();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
   useEffect(() => {
     if (dToken) {
       getDoctorProfile();
     }
   }, [dToken]);
-  console.log(profileData);
   return (
     profileData && (
       <div
@@ -50,21 +75,85 @@ const DoctorProfile = () => {
             </div>
             <p className="text-gray-600 font-medium mt-4">
               Appointment Fee:{" "}
-              <span className="text-gray-800 ">Ksh. {profileData.fee}</span>
+              <span className="text-gray-800 ">
+                Ksh.{" "}
+                {isEdit ? (
+                  <input
+                    type="number"
+                    value={profileData.fee}
+                    onChange={(e) =>
+                      setProfileData((prev: any) => ({
+                        ...prev,
+                        fee: e.target.value,
+                      }))
+                    }
+                  />
+                ) : (
+                  profileData.fee
+                )}
+              </span>
             </p>
             <div className="flex gap-2 py-4">
               <p className="text-sm">Address:</p>
-              {profileData?.Address?.line1}
+              {isEdit ? (
+                <input
+                  type="text"
+                  value={profileData?.Address?.line1}
+                  onChange={(e) =>
+                    setProfileData((prev: any) => ({
+                      ...prev,
+                      Address: { ...prev.Address, line1: e.target.value },
+                    }))
+                  }
+                />
+              ) : (
+                profileData?.Address?.line1
+              )}
               <br />
-              {profileData?.Address?.line2}
+              {isEdit ? (
+                <input
+                  type="text"
+                  value={profileData?.Address?.line2}
+                  onChange={(e) =>
+                    setProfileData((prev: any) => ({
+                      ...prev,
+                      Address: { ...prev.Address, line2: e.target.value },
+                    }))
+                  }
+                />
+              ) : (
+                profileData?.Address?.line2
+              )}
             </div>
             <div className="flex gap-1 pt-2">
-              <input checked={profileData.available} type="checkbox" />
+              <input
+                onChange={() =>
+                  isEdit &&
+                  setProfileData((prev: any) => ({
+                    ...prev,
+                    available: !prev.available,
+                  }))
+                }
+                checked={profileData.available}
+                type="checkbox"
+              />
               <label htmlFor="">Available</label>
             </div>
-            <button className="px-4 py-1 border border-primary text-sm rounded-md mt-5 hover:bg-primary hover:text-white transition-all duration-500">
-              Edit
-            </button>
+            {isEdit ? (
+              <button
+                onClick={updateProfile}
+                className="px-4 py-1 border border-primary text-sm rounded-md mt-5 hover:bg-primary hover:text-white transition-all duration-500"
+              >
+                Save
+              </button>
+            ) : (
+              <button
+                onClick={() => setIsEdit(true)}
+                className="px-4 py-1 border border-primary text-sm rounded-md mt-5 hover:bg-primary hover:text-white transition-all duration-500"
+              >
+                Edit
+              </button>
+            )}
           </div>
         </div>
       </div>

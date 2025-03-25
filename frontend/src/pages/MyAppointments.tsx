@@ -109,17 +109,17 @@ const MyAppointments = () => {
               </div>
               <div></div>
               <div className="flex flex-col gap-2 justify-end">
-                {!appointment.canceled && (
+                {!appointment.canceled && !appointment.isCompleted && (
                   /* appointment.payment */ <button className="sm:min-w-48 py-2 border rounded text-stone-500 bg-indigo-300">
                     Paid
                   </button>
                 )}
-                {!appointment.canceled && (
+                {!appointment.canceled && !appointment.isCompleted && (
                   /* !appointment.payment */ <button className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-500">
                     Pay online
                   </button>
                 )}
-                {!appointment.canceled && (
+                {!appointment.canceled && !appointment.isCompleted && (
                   <button
                     onClick={() => {
                       cancelAppointment(appointment._id);
@@ -132,6 +132,11 @@ const MyAppointments = () => {
                 {appointment.canceled && (
                   <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-500">
                     Appointment canceled
+                  </button>
+                )}
+                {appointment.isCompleted && (
+                  <button className="sm:min-w-48 py-2 border border-primary rounded text-primary">
+                    Completed
                   </button>
                 )}
               </div>
