@@ -80,9 +80,13 @@ const Dashboard = () => {
                       <p className="text-red-200 text-xm font-medium">
                         Cancelled
                       </p>
+                    ) : latestAppointment.isCompleted ? (
+                      <p className="text-xs font-medium text-primary">
+                        Completed
+                      </p>
                     ) : (
                       <img
-                        onClick={() => cancelAppointment(latestAppointment._id)}
+                        onClick={() => cancelAppointment(appointment._id)}
                         src={assets.cancel_icon}
                         alt="cancel icon"
                         className="w-10 cursor-pointer"

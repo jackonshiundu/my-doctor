@@ -132,9 +132,17 @@ const Doctors = () => {
                     alt={doctor?.name}
                   />
                   <div className="p-4">
-                    <div className="flex items-center gap-2 text-sm text-center text-primary">
-                      <p className="w-2 h-2 bg-primary rounded-full"></p>
-                      <p>Available</p>
+                    <div
+                      className={`flex items-center gap-2 text-sm text-center ${
+                        doctor.available ? "text-primary" : "text-red-600"
+                      }`}
+                    >
+                      <p
+                        className={`w-2 h-2  ${
+                          doctor.available ? "bg-primary" : "bg-gray-600"
+                        } rounded-full`}
+                      ></p>
+                      <p> {doctor.available ? "Available" : "Not Available"}</p>
                     </div>
                     <p className="text-gray-900 text-lg font-medium">
                       {doctor.name}
