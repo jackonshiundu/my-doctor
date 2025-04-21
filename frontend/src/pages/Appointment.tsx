@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { assets, Doctor } from "../assets/assets";
 import RelatedDoctors from "../components/RelatedDoctors";
@@ -185,7 +185,7 @@ const Appointment = () => {
               Appointment fee:{" "}
               <span className="text-gray-600 font-bold">
                 {currencySymbol}
-                {docInfo.fee}
+                {docInfo.fees}
               </span>
             </p>
           </div>

@@ -103,11 +103,7 @@ const MyProfile = () => {
           <div className="inline-block relative">
             <img
               className="w-36 opacity-75 rounded"
-              src={
-                image
-                  ? URL.createObjectURL(image)
-                  : userData.image || assets.default_profile
-              }
+              src={image ? URL.createObjectURL(image) : userData.image}
               alt="profile"
             />
             {!image && (
@@ -127,11 +123,7 @@ const MyProfile = () => {
           />
         </label>
       ) : (
-        <img
-          className="w-36 rounded-md"
-          src={userData.image || assets.default_profile}
-          alt="profile"
-        />
+        <img className="w-36 rounded-md" src={userData.image} alt="profile" />
       )}
 
       {isEdit ? (

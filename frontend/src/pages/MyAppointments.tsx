@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
-import { assets, TheAppointment } from "../assets/assets";
+import { TheAppointment } from "../assets/assets";
 import axios from "axios";
 import toast from "react-hot-toast";
 

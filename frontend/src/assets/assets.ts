@@ -51,9 +51,10 @@ export interface Doctor {
   degree: string;
   experience: string;
   about: string;
-  available: boolean;
+  available?: boolean;
   fees: number;
   Address: Address;
+  slots_booked?: [];
 }
 
 // Define the type for the speciality data object
@@ -69,7 +70,7 @@ export interface TheAppointment {
   slotDate: string;
   slotTime: string;
   userData: object;
-  docData: object;
+  docData: Doctor;
   amount: number;
   date: number;
   canceled: boolean;
@@ -135,7 +136,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
-    address: {
+    Address: {
       line1: "17th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -150,7 +151,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 60,
-    address: {
+    Address: {
       line1: "27th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -165,7 +166,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 30,
-    address: {
+    Address: {
       line1: "37th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -180,7 +181,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 40,
-    address: {
+    Address: {
       line1: "47th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -195,7 +196,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
-    address: {
+    Address: {
       line1: "57th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -210,7 +211,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
-    address: {
+    Address: {
       line1: "57th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -225,7 +226,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
-    address: {
+    Address: {
       line1: "17th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -240,7 +241,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 60,
-    address: {
+    Address: {
       line1: "27th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -255,7 +256,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 30,
-    address: {
+    Address: {
       line1: "37th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -270,7 +271,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 40,
-    address: {
+    Address: {
       line1: "47th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -285,7 +286,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
-    address: {
+    Address: {
       line1: "57th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -300,7 +301,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
-    address: {
+    Address: {
       line1: "57th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -315,7 +316,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
-    address: {
+    Address: {
       line1: "17th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -330,7 +331,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 60,
-    address: {
+    Address: {
       line1: "27th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
@@ -345,7 +346,7 @@ export const doctors: Doctor[] = [
     about:
       "Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 30,
-    address: {
+    Address: {
       line1: "37th Cross, Richmond",
       line2: "Circle, Ring Road, London",
     },
