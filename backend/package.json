@@ -5,7 +5,8 @@
   "module": "module",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node dist/src/server.js",
+    "start": "npm run build && node --max-old-space-size=512 dist/server.js",
+
     "dev": "nodemon",
     "test": "jest --watchAll  --detectOpenHandles"
   },

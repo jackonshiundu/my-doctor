@@ -52,7 +52,7 @@ export interface Doctor {
   experience: string;
   about: string;
   available: boolean;
-  fee: number;
+  fees: number;
   Address: Address;
 }
 
@@ -73,6 +73,7 @@ export interface TheAppointment {
   amount: number;
   date: number;
   canceled: boolean;
+  image: string;
   payment: boolean;
   isCompleted: boolean;
 }

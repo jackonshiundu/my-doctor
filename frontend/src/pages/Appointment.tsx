@@ -17,7 +17,7 @@ const Appointment = () => {
   const navigate = useNavigate();
   const { doctors, currencySymbol, backendUrl, token, getAllDoctorsData } =
     useContext(AppContext);
-  const [docInfo, setDocInfo] = useState<Doctor>();
+  const [docInfo, setDocInfo] = useState<Doctor | null>(null);
   const [docSlots, setDocSlots] = useState<TimeSlot[][]>([]);
   const [slotIndex, setSlotIndex] = useState(0);
   const [slotTime, setSlotTime] = useState("");
